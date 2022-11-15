@@ -3,7 +3,7 @@ const { createApp } = Vue;
 const app = createApp({
     data() {
         return {
-            message: 'Locate',
+            title: 'Locater',
             parts: [],
             uniqValues: [],
             selectedValue: ""
