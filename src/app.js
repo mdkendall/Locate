@@ -1,9 +1,9 @@
-const { createApp } = Vue;
+import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js';
 
 const app = createApp({
     data() {
         return {
-            title: 'Locater',
+            title: 'Locator',
             parts: [],
             uniqValues: [],
             selectedValue: ""
@@ -17,7 +17,8 @@ const app = createApp({
     methods: {
         loadParts(partText) {
             this.parts = $.csv.toObjects(partText);
-            for (part of this.parts) {
+            console.log(this.parts);
+            for (var part of this.parts) {
                 if (!this.uniqValues.includes(part.Description)) this.uniqValues.push(part.Description);
             }
         },
