@@ -1,0 +1,28 @@
+<html>
+
+<head>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="jquery.csv.js"></script>
+    <script defer src="app.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <h1>{{ message }}</h1>
+        <div>
+            <select v-model="selectedValue">
+                <option disabled value="">Select a value</option>
+                <option v-for="value in uniqValues" v-bind:value="value">{{value}}</option>
+            </select>
+        </div>
+        <svg height="75%" viewBox="0 0 100 115" xmlns="http://www.w3.org/2000/svg">
+            <image width="100" height="115" href="tas.png" />
+            <g transform="translate(0,115) scale(1,-1)">
+                <circle v-for="part in selectedParts()" :cx="part.X" :cy="part.Y" r="1" stroke="red" stroke-width="0.5" fill="yellow"/>
+            </g>
+        </svg>
+        <p><span v-for="part in selectedParts()">{{part.Ref}}, </span></p>
+    </div>
+</body>
+
+</html>
