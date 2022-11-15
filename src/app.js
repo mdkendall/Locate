@@ -1,6 +1,4 @@
-import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js';
-
-const app = createApp({
+export default {
     data() {
         return {
             title: 'Locator',
@@ -26,6 +24,4 @@ const app = createApp({
     mounted() {
         fetch('parts.csv').then(res => res.text()).then(text => this.loadParts(text));
     }
-});
-
-app.mount('#app');
+};
