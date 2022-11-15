@@ -27,21 +27,14 @@
  * Copyrighted 2012 by Evan Plaice.
  */
 
+var $ = {};
+
 RegExp.escape = function (s) {
   return s.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&')
 };
 
 (function () {
   'use strict'
-
-  let $
-
-  // to keep backwards compatibility
-  if (typeof jQuery !== 'undefined' && jQuery) {
-    $ = jQuery
-  } else {
-    $ = {}
-  }
 
   /**
    * jQuery.csv.defaults
