@@ -9,6 +9,11 @@ const app = createApp({
             selectedValue: ""
         }
     },
+    computed: {
+        selectedParts() {
+            return this.parts.filter(part => {return part.Description == this.selectedValue;});
+        }
+    },
     methods: {
         loadParts(partText) {
             this.parts = $.csv.toObjects(partText);
@@ -16,9 +21,6 @@ const app = createApp({
                 if (!this.uniqValues.includes(part.Description)) this.uniqValues.push(part.Description);
             }
         },
-        selectedParts() {
-            return this.parts.filter(part => {return part.Description == this.selectedValue;});
-        }
     },
     mounted() {
         fetch('parts.csv').then(res => res.text()).then(text => this.loadParts(text));
