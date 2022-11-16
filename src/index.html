@@ -12,11 +12,11 @@
         <div>
             <select v-model="selectedValue">
                 <option disabled value="">Select a value</option>
-                <option v-for="value in uniqValues" v-bind:value="value">{{value}}</option>
+                <option v-for="value in uniqValues" :value="value">{{value}}</option>
             </select>
         </div>
-        <location-image v-bind:parts="selectedParts"></location-image>
-        <reference-list v-bind:parts="selectedParts"></reference-list>
+        <location-image :parts="selectedParts"></location-image>
+        <reference-list :parts="selectedParts"></reference-list>
     </div>
 
     <script type="module">
