@@ -1,4 +1,9 @@
+import ReferenceList from "./components/ReferenceList.js";
+
 export default {
+    components: {
+        ReferenceList: ReferenceList
+    },
     data() {
         return {
             title: 'Locator',
@@ -15,7 +20,6 @@ export default {
     methods: {
         loadParts(partText) {
             this.parts = $.csv.toObjects(partText);
-            console.log(this.parts);
             for (var part of this.parts) {
                 if (!this.uniqValues.includes(part.Description)) this.uniqValues.push(part.Description);
             }

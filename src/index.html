@@ -21,7 +21,7 @@
                 <circle v-for="part in selectedParts" :cx="part.X" :cy="part.Y" r="1" stroke="red" stroke-width="0.5" fill="yellow"/>
             </g>
         </svg>
-        <p><span v-for="part in selectedParts">{{part.Ref}}, </span></p>
+        <p><reference-list v-bind:parts="selectedParts"></reference-list></p>
     </div>
 
     <script type="module">
