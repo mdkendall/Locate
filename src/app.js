@@ -1,8 +1,10 @@
 import ReferenceList from "./components/ReferenceList.js";
+import LocationImage from "./components/LocationImage.js";
 
 export default {
     components: {
-        ReferenceList: ReferenceList
+        ReferenceList: ReferenceList,
+        LocationImage: LocationImage
     },
     data() {
         return {
