@@ -10,10 +10,7 @@
     <div id="app">
         <h1>{{title}}</h1>
         <div>
-            <select v-model="selectedValue">
-                <option disabled value="">Select a value</option>
-                <option v-for="value in uniqValues" :value="value">{{value}}</option>
-            </select>
+            <selector v-model="selectedValue" :items="uniqValues"></selector>
         </div>
         <location-image :parts="selectedParts"></location-image>
         <reference-list :parts="selectedParts"></reference-list>

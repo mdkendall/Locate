@@ -1,14 +1,16 @@
 import ReferenceList from "./components/ReferenceList.js";
 import LocationImage from "./components/LocationImage.js";
+import Selector from "./components/Selector.js";
 
 export default {
     components: {
         ReferenceList: ReferenceList,
-        LocationImage: LocationImage
+        LocationImage: LocationImage,
+        Selector: Selector
     },
     data() {
         return {
-            title: 'Locator',
+            title: 'placto',
             parts: [],
             uniqValues: [],
             selectedValue: ""
