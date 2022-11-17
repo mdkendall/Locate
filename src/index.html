@@ -10,7 +10,8 @@
     <div id="app">
         <h1>{{title}}</h1>
         <div>
-            <selector v-model="selectedValue" :items="uniqValues"></selector>
+            Layer: <selector v-model="selectedLayer" :items="uniqLayers"></selector>
+            Value: <selector v-model="selectedValue" :items="uniqValues"></selector>
         </div>
         <location-image :parts="selectedParts"></location-image>
         <reference-list :parts="selectedParts"></reference-list>

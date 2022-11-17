@@ -13,7 +13,9 @@ export default {
             title: 'placto',
             parts: [],
             uniqValues: [],
-            selectedValue: ""
+            selectedValue: "",
+            uniqLayers: [],
+            selectedLayer: ""
         }
     },
     computed: {
@@ -26,6 +28,9 @@ export default {
             this.parts = $.csv.toObjects(partText);
             for (var part of this.parts) {
                 if (!this.uniqValues.includes(part.Description)) this.uniqValues.push(part.Description);
+            }
+            for (var part of this.parts) {
+                if (!this.uniqLayers.includes(part.Layer)) this.uniqLayers.push(part.Layer);
             }
         },
     },
