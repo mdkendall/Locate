@@ -10,7 +10,7 @@ export default {
     },
     data() {
         return {
-            title: 'placto',
+            title: 'Locator',
             parts: [],
             uniqValues: [],
             selectedValue: "",
@@ -26,15 +26,25 @@ export default {
     methods: {
         loadParts(partText) {
             this.parts = $.csv.toObjects(partText);
+            this.uniqValues = [];
             for (var part of this.parts) {
                 if (!this.uniqValues.includes(part.Description)) this.uniqValues.push(part.Description);
             }
+            this.uniqLayers = [];
             for (var part of this.parts) {
                 if (!this.uniqLayers.includes(part.Layer)) this.uniqLayers.push(part.Layer);
             }
         },
+        dropParts(event, loader) {
+            var reader = new FileReader();
+            var loader = this.loadParts;
+            reader.readAsDataURL(event.dataTransfer.items[0].getAsFile());
+            reader.onloadend = function() {
+                var text = atob(reader.result.split(',')[1]); // Base64 decode
+                loader(text);
+            }
+        }
     },
     mounted() {
-        fetch('parts.csv').then(res => res.text()).then(text => this.loadParts(text));
     }
 };
