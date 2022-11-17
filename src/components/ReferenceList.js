@@ -1,4 +1,4 @@
 export default {
     props: ['parts'],
-    template: `<div><span v-for="part in parts">{{part.Ref}}, </span></div>`
+    template: `<div>{{ parts.map(a=>a.Ref).join(', ') }}</div>`
 };
