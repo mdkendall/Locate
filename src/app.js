@@ -38,10 +38,9 @@ export default {
         dropParts(event, loader) {
             var reader = new FileReader();
             var loader = this.loadParts;
-            reader.readAsDataURL(event.dataTransfer.items[0].getAsFile());
+            reader.readAsText(event.dataTransfer.items[0].getAsFile());
             reader.onloadend = function() {
-                var text = atob(reader.result.split(',')[1]); // Base64 decode
-                loader(text);
+                loader(reader.result);
             }
         }
     },
