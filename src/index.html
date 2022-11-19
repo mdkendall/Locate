@@ -2,13 +2,16 @@
 <html lang="en">
 
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Locator</title>
+    <link href="https://unpkg.com/bootstrap@5/dist/css/bootstrap.css" rel="stylesheet">
     <script src="jquery.csv.js"></script>
 </head>
 
 <body>
-    <div id="app">
-        <h1>{{title}}</h1>
+    <div id="app" class="container">
+        <h2>{{title}}</h2>
         <div @dragover.prevent="" @drop.prevent="dropParts($event)">
             Layer: <selector v-model="selectedLayer" :items="uniqLayers"></selector>
             Value: <selector v-model="selectedValue" :items="uniqValues"></selector>
