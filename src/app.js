@@ -16,7 +16,7 @@ export default {
             selectedValue: "",
             uniqLayers: [],
             selectedLayer: "",
-            tas: {name: "tas.png", left: 0, bottom: 0, width: 100, height: 115}
+            tas: {name: "bas-lpb.png", left: -16.3, bottom: -43.3, width: 32.6, height: 86.6}
         }
     },
     computed: {
