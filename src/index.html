@@ -16,7 +16,7 @@
             Layer: <selector v-model="selectedLayer" :items="uniqLayers"></selector>
             Value: <selector v-model="selectedValue" :items="uniqValues"></selector>
         </div>
-        <location-image :parts="selectedParts"></location-image>
+        <location-image :parts="selectedParts" :img="tas"></location-image>
         <reference-list :parts="selectedParts"></reference-list>
     </div>
 

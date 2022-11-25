@@ -15,7 +15,8 @@ export default {
             uniqValues: [],
             selectedValue: "",
             uniqLayers: [],
-            selectedLayer: ""
+            selectedLayer: "",
+            tas: {name: "tas.png", left: 0, bottom: 0, width: 100, height: 115}
         }
     },
     computed: {
