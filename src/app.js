@@ -21,7 +21,10 @@ export default {
     },
     computed: {
         selectedParts() {
-            return this.parts.filter(part => {return part.Description == this.selectedValue;});
+            return this.parts.filter(part => {
+                return part.Description == this.selectedValue &&
+                    part.Layer == this.selectedLayer;
+            });
         }
     },
     methods: {
