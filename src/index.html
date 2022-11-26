@@ -11,13 +11,56 @@
 
 <body>
     <div id="app" class="container">
-        <h2><img src="logo.png" width="80"> {{title}}</h2>
-        <div @dragover.prevent="" @drop.prevent="dropParts($event)">
-            Layer: <selector v-model="selectedLayer" :items="uniqLayers"></selector>
-            Value: <selector v-model="selectedValue" :items="uniqValues"></selector>
+        <div class="row"><div class="col"><h2><img src="logo.png" width="80"> {{title}}</h2></div></div>
+        <!-- Nav tabs -->
+        <div class="row mb-3"><div class="col"><ul class="nav nav-tabs">
+            <li class="nav-item"><a class="nav-link" href="#" @click="selectedTab='setup'">Setup</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" @click="selectedTab='assembly'">Assembly</a></li>
+        </ul></div></div>
+        <!-- Setup pane -->
+        <div class="row" v-if="selectedTab == 'setup'">
+            <div class="col" style="max-width: 18rem">
+                <div class="card text-bg-light" @dragover.prevent="" @drop.prevent="dropParts($event)">
+                    <div class="card-body">
+                        <h5 class="card-title"><img src="assets/img/filetype-csv.svg" width="32"/> Parts List</h5>
+                        <p class="card-text">Drag parts list here. One row per part. Columns must include Ref, Description, X, Y and Layer.</p>
+                        <p v-if="parts.length > 0">Loaded {{parts.length}} parts with {{uniqValues.length}} unique values.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col" style="max-width: 18rem">
+                <div class="card text-bg-light" @dragover.prevent="" @drop.prevent="dropAssy($event)">
+                    <div class="card-body">
+                        <h5 class="card-title"><img src="assets/img/filetype-png.svg" width="32"/> Assembly Drawing</h5>
+                        <p class="card-text">Drag assembly drawing here. PNG or JPG format. Cropped to board extents.</p>
+                        <img v-if="assy.data.length > 0" style="max-width: 12rem" :src="assy.data" />
+                    </div>
+                </div>
+            </div>
+            <div class="col" style="max-width: 18rem">
+                <div class="card text-bg-light">
+                    <div class="card-body">
+                        <h5 class="card-title"><img src="assets/img/aspect-ratio.svg" width="32"/> Board Size</h5>
+                        <p class="card-text">Board dimensions in same units as in parts list.</p>
+                        <form>
+                            <div class="row mb-1"><label class="col-form-label col-4">Left</label><input class="form-control col" type="number" v-model="assy.left"></div>
+                            <div class="row mb-1"><label class="col-form-label col-4">Bottom</label><input class="form-control col" type="number" v-model="assy.bottom"></div>
+                            <div class="row mb-1"><label class="col-form-label col-4">Width</label><input class="form-control col" type="number" v-model="assy.width"></div>
+                            <div class="row mb-1"><label class="col-form-label col-4">Height</label><input class="form-control col" type="number" v-model="assy.height"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-        <location-image :parts="selectedParts" :img="tas"></location-image>
-        <reference-list :parts="selectedParts"></reference-list>
+        <!-- Main assmebly drawing pane -->
+        <div v-if="selectedTab == 'assembly'">
+            <form class="row mb-3">
+                <label class="col-form-label col-1">Value</label><selector class="form-select col" v-model="selectedValue" :items="uniqValues"></selector>
+                <label class="col-form-label col-1">Layer</label><selector class="form-select col" v-model="selectedLayer" :items="uniqLayers"></selector>
+            </form>
+            <div class="row mb-3"><div class="col"><location-image :parts="selectedParts" :img="assy"></location-image></div></div>
+            <div class="row mb-3"><div class="col"><reference-list :parts="selectedParts"></reference-list></div></div>
+        </div>
     </div>
 
     <script type="module">

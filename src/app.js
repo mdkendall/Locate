@@ -11,12 +11,13 @@ export default {
     data() {
         return {
             title: 'Locator',
+            selectedTab: 'setup',
             parts: [],
             uniqValues: [],
             selectedValue: "",
             uniqLayers: [],
             selectedLayer: "",
-            tas: {name: "bas-lpb.png", left: -16.3, bottom: -43.3, width: 32.6, height: 86.6}
+            assy: {data: "", left: -16.3, bottom: -43.3, width: 32.6, height: 86.6}
         }
     },
     computed: {
@@ -39,10 +40,21 @@ export default {
                 if (!this.uniqLayers.includes(part.Layer)) this.uniqLayers.push(part.Layer);
             }
         },
-        dropParts(event, loader) {
+        dropParts(event) {
             var reader = new FileReader();
             var loader = this.loadParts;
             reader.readAsText(event.dataTransfer.items[0].getAsFile());
+            reader.onloadend = function() {
+                loader(reader.result);
+            }
+        },
+        loadAssy(assyData) {
+            this.assy.data = assyData;
+        },
+        dropAssy(event) {
+            var reader = new FileReader();
+            var loader = this.loadAssy;
+            reader.readAsDataURL(event.dataTransfer.items[0].getAsFile());
             reader.onloadend = function() {
                 loader(reader.result);
             }
