@@ -34,7 +34,9 @@
                         <h5 class="card-title"><img src="assets/img/filetype-png.svg" width="32"/> Assembly Drawing</h5>
                         <p class="card-text">Drag assembly drawing here. PNG or JPG format. Cropped to board extents.</p>
                         <img v-if="assy.data.length > 0" style="max-width: 12rem" class="mb-3" :src="assy.data" />
-                        <form v-if="assy.data.length > 0 && parts.length > 0" class="row"><label class="col-form-label col-6">Layer</label><selector class="form-select col" v-model="selectedLayer" :items="uniqLayers"></selector></form>
+                        <form v-if="assy.data.length > 0 && parts.length > 0" class="row">
+                            <label class="col-form-label col-6">Layer</label><selector class="form-select col" v-model="selectedLayer" :items="uniqLayers"></selector>
+                        </form>
                     </div>
                 </div>
             </div>
