@@ -17,7 +17,7 @@ export default {
             selectedValue: "",
             uniqLayers: [],
             selectedLayer: "",
-            assy: {data: "", left: -16.3, bottom: -43.3, width: 32.6, height: 86.6}
+            assy: {data: "", left: 0, bottom: 0, width: 100, height: 100}
         }
     },
     computed: {
