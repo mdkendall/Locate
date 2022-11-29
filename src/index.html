@@ -19,7 +19,7 @@
         </ul></div></div>
         <!-- Setup pane -->
         <div class="row" v-if="selectedTab == 'setup'">
-            <div class="col" style="max-width: 18rem">
+            <div class="col-md-4 mb-3" style="max-width: 18rem">
                 <div class="card text-bg-light" @dragover.prevent="" @drop.prevent="dropParts($event)">
                     <div class="card-body">
                         <h5 class="card-title"><img src="assets/img/filetype-csv.svg" width="32"/> Parts List</h5>
@@ -28,7 +28,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col" style="max-width: 18rem">
+            <div class="col-md-4 mb-3" style="max-width: 18rem">
                 <div class="card text-bg-light" @dragover.prevent="" @drop.prevent="dropAssy($event)">
                     <div class="card-body">
                         <h5 class="card-title"><img src="assets/img/filetype-png.svg" width="32"/> Assembly Drawing</h5>
@@ -37,16 +37,16 @@
                     </div>
                 </div>
             </div>
-            <div class="col" style="max-width: 18rem">
+            <div class="col-md-4 mb-3" style="max-width: 18rem">
                 <div class="card text-bg-light">
                     <div class="card-body">
                         <h5 class="card-title"><img src="assets/img/aspect-ratio.svg" width="32"/> Board Size</h5>
                         <p class="card-text">Board dimensions in same units as in parts list.</p>
                         <form>
-                            <div class="row mb-1"><label class="col-form-label col-4">Left</label><input class="form-control col" type="number" v-model="assy.left"></div>
-                            <div class="row mb-1"><label class="col-form-label col-4">Bottom</label><input class="form-control col" type="number" v-model="assy.bottom"></div>
-                            <div class="row mb-1"><label class="col-form-label col-4">Width</label><input class="form-control col" type="number" v-model="assy.width"></div>
-                            <div class="row mb-1"><label class="col-form-label col-4">Height</label><input class="form-control col" type="number" v-model="assy.height"></div>
+                            <div class="row mb-1"><label class="col-form-label col-6">Left</label><input class="form-control col" type="number" v-model="assy.left"></div>
+                            <div class="row mb-1"><label class="col-form-label col-6">Bottom</label><input class="form-control col" type="number" v-model="assy.bottom"></div>
+                            <div class="row mb-1"><label class="col-form-label col-6">Width</label><input class="form-control col" type="number" v-model="assy.width"></div>
+                            <div class="row mb-1"><label class="col-form-label col-6">Height</label><input class="form-control col" type="number" v-model="assy.height"></div>
                         </form>
                     </div>
                 </div>
