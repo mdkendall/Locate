@@ -26,6 +26,9 @@ export default {
                 return part.Description == this.selectedValue &&
                     part.Layer == this.selectedLayer;
             });
+        },
+        assyFlip() {
+            return this.selectedLayer.toLowerCase().includes('bot');
         }
     },
     methods: {
