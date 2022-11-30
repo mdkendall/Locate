@@ -60,7 +60,7 @@
             <form class="row mb-3">
                 <label class="col-form-label col-1">Value</label><selector class="form-select col" style="max-width: 36rem" v-model="selectedValue" :items="uniqValues"></selector>
             </form>
-            <div class="row mb-3"><div class="col"><location-image :parts="selectedParts" :img="assy"></location-image></div></div>
+            <div class="row mb-3"><div class="col"><location-image :parts="selectedParts" :img="assy" style="max-width: 48rem; max-height: 48rem"></location-image></div></div>
             <div class="row mb-3"><div class="col"><reference-list :parts="selectedParts"></reference-list></div></div>
         </div>
     </div>

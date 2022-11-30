@@ -1,7 +1,7 @@
 export default {
     props: ['parts', 'img'],
     template: `
-        <svg height="768" :viewBox="img.left.toString()+' '+img.bottom.toString()+' '+img.width.toString()+' '+img.height.toString()">
+        <svg :viewBox="img.left.toString()+' '+img.bottom.toString()+' '+img.width.toString()+' '+img.height.toString()">
             <image :x="img.left" :y="img.bottom" :width="img.width" :height="img.height" :href="img.data" />
             <g :transform="'translate(0,'+(2*img.bottom+img.height).toString()+') scale(1,-1)'">
                 <g :transform="'translate('+(2*img.left+img.width).toString()+',0) scale(-1,1)'">
