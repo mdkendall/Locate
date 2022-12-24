@@ -2,6 +2,7 @@
 import ReferenceList from "./components/ReferenceList.vue";
 import LocationImage from "./components/LocationImage.vue";
 import Selector from "./components/Selector.vue";
+import { Csv } from './csv.js'
 
 export default {
     components: {
@@ -34,7 +35,7 @@ export default {
     },
     methods: {
         loadParts(partText) {
-            this.parts = $.csv.toObjects(partText);
+            this.parts = Csv.toObjects(partText);
             this.uniqValues = [];
             for (var part of this.parts) {
                 if (!this.uniqValues.includes(part.Description)) this.uniqValues.push(part.Description);
