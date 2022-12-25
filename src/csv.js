@@ -1,4 +1,10 @@
-/* eslint no-prototype-builtins: 0 */
+/* CSV parser based on jQuery-csv (jQuery Plugin) by Evan Plaice
+ * https://github.com/evanplaice/jquery-csv lightly refactored as
+ * a plain JavaScript module without jQuery dependency.
+ *
+ * Original copyright statement follows:
+ */
+
 /**
  * jQuery-csv (jQuery Plugin)
  *
@@ -27,21 +33,13 @@
  * Copyrighted 2012 by Evan Plaice.
  */
 
-var $ = {};
-
 RegExp.escape = function (s) {
   return s.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&')
 };
 
-(function () {
   'use strict'
 
-  /**
-   * jQuery.csv.defaults
-   * Encapsulates the method paramater defaults for the CSV plugin module.
-   */
-
-  $.csv = {
+  export const Csv = {
     defaults: {
       separator: ',',
       delimiter: '"',
@@ -271,8 +269,8 @@ RegExp.escape = function (s) {
         options = options || {}
 
         // cache settings
-        const separator = options.separator || $.csv.defaults.separator
-        const delimiter = options.delimiter || $.csv.defaults.delimiter
+        const separator = options.separator || Csv.defaults.separator
+        const delimiter = options.delimiter || Csv.defaults.delimiter
 
         // set initial state if it's missing
         options.state = options.state || {}
@@ -589,7 +587,7 @@ RegExp.escape = function (s) {
     helpers: {
 
       /**
-       * $.csv.helpers.collectPropertyNames(objectsArray)
+       * Csv.helpers.collectPropertyNames(objectsArray)
        * Collects all unique property names from all passed objects.
        *
        * @param {Array} objects Objects to collect properties from.
@@ -615,7 +613,7 @@ RegExp.escape = function (s) {
     },
 
     /**
-     * $.csv.toArray(csv)
+     * Csv.toArray(csv)
      * Converts a CSV entry string to a javascript array.
      *
      * @param {Array} csv The string containing the CSV data.
@@ -625,7 +623,7 @@ RegExp.escape = function (s) {
      *
      * This method deals with simple CSV strings only. It's useful if you only
      * need to parse a single entry. If you need to parse more than one line,
-     * use $.csv2Array instead.
+     * use Csv2Array instead.
      */
     toArray: function (csv, options, callback) {
       // if callback was passed to options swap callback with options
@@ -640,8 +638,8 @@ RegExp.escape = function (s) {
       options = (options !== undefined ? options : {})
       const config = {}
       config.callback = ((callback !== undefined && typeof (callback) === 'function') ? callback : false)
-      config.separator = 'separator' in options ? options.separator : $.csv.defaults.separator
-      config.delimiter = 'delimiter' in options ? options.delimiter : $.csv.defaults.delimiter
+      config.separator = 'separator' in options ? options.separator : Csv.defaults.separator
+      config.delimiter = 'delimiter' in options ? options.delimiter : Csv.defaults.delimiter
       const state = (options.state !== undefined ? options.state : {})
 
       // setup
@@ -653,7 +651,7 @@ RegExp.escape = function (s) {
         state: state
       }
 
-      const entry = $.csv.parsers.parseEntry(csv, options)
+      const entry = Csv.parsers.parseEntry(csv, options)
 
       // push the value to a callback if one is defined
       if (!config.callback) {
@@ -664,7 +662,7 @@ RegExp.escape = function (s) {
     },
 
     /**
-     * $.csv.toArrays(csv)
+     * Csv.toArrays(csv)
      * Converts a CSV string to a javascript array.
      *
      * @param {String} csv The string containing the raw CSV data.
@@ -689,8 +687,8 @@ RegExp.escape = function (s) {
       options = (options !== undefined ? options : {})
       const config = {}
       config.callback = ((callback !== undefined && typeof (callback) === 'function') ? callback : false)
-      config.separator = 'separator' in options ? options.separator : $.csv.defaults.separator
-      config.delimiter = 'delimiter' in options ? options.delimiter : $.csv.defaults.delimiter
+      config.separator = 'separator' in options ? options.separator : Csv.defaults.separator
+      config.delimiter = 'delimiter' in options ? options.delimiter : Csv.defaults.delimiter
 
       // setup
       let data = []
@@ -715,7 +713,7 @@ RegExp.escape = function (s) {
       }
 
       // parse the data
-      data = $.csv.parsers.parse(csv, options)
+      data = Csv.parsers.parse(csv, options)
 
       // onPostParse hook
       if (options.onPostParse !== undefined) {
@@ -731,7 +729,7 @@ RegExp.escape = function (s) {
     },
 
     /**
-     * $.csv.toObjects(csv)
+     * Csv.toObjects(csv)
      * Converts a CSV string to a javascript object.
      * @param {String} csv The string containing the raw CSV data.
      * @param {Object} [options] An object containing user-defined options.
@@ -755,9 +753,9 @@ RegExp.escape = function (s) {
       options = (options !== undefined ? options : {})
       const config = {}
       config.callback = ((callback !== undefined && typeof (callback) === 'function') ? callback : false)
-      config.separator = 'separator' in options ? options.separator : $.csv.defaults.separator
-      config.delimiter = 'delimiter' in options ? options.delimiter : $.csv.defaults.delimiter
-      config.headers = 'headers' in options ? options.headers : $.csv.defaults.headers
+      config.separator = 'separator' in options ? options.separator : Csv.defaults.separator
+      config.delimiter = 'delimiter' in options ? options.delimiter : Csv.defaults.delimiter
+      config.headers = 'headers' in options ? options.headers : Csv.defaults.headers
       options.start = 'start' in options ? options.start : 1
 
       // account for headers
@@ -808,11 +806,11 @@ RegExp.escape = function (s) {
       }
 
       // parse the csv
-      const headerLine = $.csv.parsers.splitLines(csv, headerOptions)
-      const headers = $.csv.toArray(headerLine[0], headerOptions)
+      const headerLine = Csv.parsers.splitLines(csv, headerOptions)
+      const headers = Csv.toArray(headerLine[0], headerOptions)
 
       // fetch the data
-      lines = $.csv.parsers.splitLines(csv, options)
+      lines = Csv.parsers.splitLines(csv, options)
 
       // reset the state for re-use
       options.state.colNum = 1
@@ -824,7 +822,7 @@ RegExp.escape = function (s) {
 
       // convert data to objects
       for (let i = 0, len = lines.length; i < len; i++) {
-        const entry = $.csv.toArray(lines[i], options)
+        const entry = Csv.toArray(lines[i], options)
         const object = {}
         for (let j = 0; j < headers.length; j++) {
           object[headers[j]] = entry[j]
@@ -853,7 +851,7 @@ RegExp.escape = function (s) {
     },
 
     /**
-    * $.csv.fromArrays(arrays)
+    * Csv.fromArrays(arrays)
     * Converts a javascript array to a CSV String.
     *
     * @param {Array} arrays An array containing an array of CSV entries.
@@ -876,8 +874,8 @@ RegExp.escape = function (s) {
       options = (options !== undefined ? options : {})
       const config = {}
       config.callback = ((callback !== undefined && typeof (callback) === 'function') ? callback : false)
-      config.separator = 'separator' in options ? options.separator : $.csv.defaults.separator
-      config.delimiter = 'delimiter' in options ? options.delimiter : $.csv.defaults.delimiter
+      config.separator = 'separator' in options ? options.separator : Csv.defaults.separator
+      config.delimiter = 'delimiter' in options ? options.delimiter : Csv.defaults.delimiter
 
       let output = ''
 
@@ -911,7 +909,7 @@ RegExp.escape = function (s) {
     },
 
     /**
-     * $.csv.fromObjects(objects)
+     * Csv.fromObjects(objects)
      * Converts a javascript dictionary to a CSV string.
      *
      * @param {Object} objects An array of objects containing the data.
@@ -945,15 +943,15 @@ RegExp.escape = function (s) {
       options = (options !== undefined ? options : {})
       const config = {}
       config.callback = ((callback !== undefined && typeof (callback) === 'function') ? callback : false)
-      config.separator = 'separator' in options ? options.separator : $.csv.defaults.separator
-      config.delimiter = 'delimiter' in options ? options.delimiter : $.csv.defaults.delimiter
-      config.headers = 'headers' in options ? options.headers : $.csv.defaults.headers
+      config.separator = 'separator' in options ? options.separator : Csv.defaults.separator
+      config.delimiter = 'delimiter' in options ? options.delimiter : Csv.defaults.delimiter
+      config.headers = 'headers' in options ? options.headers : Csv.defaults.headers
       config.sortOrder = 'sortOrder' in options ? options.sortOrder : 'declare'
       config.manualOrder = 'manualOrder' in options ? options.manualOrder : []
       config.transform = options.transform
 
       if (typeof config.manualOrder === 'string') {
-        config.manualOrder = $.csv.toArray(config.manualOrder, config)
+        config.manualOrder = Csv.toArray(config.manualOrder, config)
       }
 
       if (config.transform !== undefined) {
@@ -965,7 +963,7 @@ RegExp.escape = function (s) {
         }
       }
 
-      let props = $.csv.helpers.collectPropertyNames(objects)
+      let props = Csv.helpers.collectPropertyNames(objects)
 
       if (config.sortOrder === 'alpha') {
         props.sort()
@@ -1003,18 +1001,6 @@ RegExp.escape = function (s) {
       }
 
       // push the value to a callback if one is defined
-      return $.csv.fromArrays(output, options, config.callback)
+      return Csv.fromArrays(output, options, config.callback)
     }
   }
-
-  // Maintenance code to maintain backward-compatibility
-  // Will be removed in release 1.0
-  $.csvEntry2Array = $.csv.toArray
-  $.csv2Array = $.csv.toArrays
-  $.csv2Dictionary = $.csv.toObjects
-
-  // CommonJS module is defined
-  if (typeof module !== 'undefined' && module.exports) {
-    module.exports = $.csv
-  }
-}).call(this)

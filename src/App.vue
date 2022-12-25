@@ -1,17 +1,78 @@
-<!DOCTYPE html>
-<html lang="en">
+<script>
+import ReferenceList from "./components/ReferenceList.vue";
+import LocationImage from "./components/LocationImage.vue";
+import Selector from "./components/Selector.vue";
+import { Csv } from './csv.js'
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Locator</title>
-    <link href="https://unpkg.com/bootstrap@5/dist/css/bootstrap.css" rel="stylesheet">
-    <script src="jquery.csv.js"></script>
-</head>
+export default {
+    components: {
+        ReferenceList: ReferenceList,
+        LocationImage: LocationImage,
+        Selector: Selector
+    },
+    data() {
+        return {
+            title: 'Locator',
+            selectedTab: 'setup',
+            parts: [],
+            uniqValues: [],
+            selectedValue: "",
+            uniqLayers: [],
+            selectedLayer: "",
+            assy: {data: "", left: 0, bottom: 0, width: 100, height: 100}
+        }
+    },
+    computed: {
+        selectedParts() {
+            return this.parts.filter(part => {
+                return part.Description == this.selectedValue &&
+                    part.Layer == this.selectedLayer;
+            });
+        },
+        assyFlip() {
+            return this.selectedLayer.toLowerCase().includes('bot');
+        }
+    },
+    methods: {
+        loadParts(partText) {
+            this.parts = Csv.toObjects(partText);
+            this.uniqValues = [];
+            for (var part of this.parts) {
+                if (!this.uniqValues.includes(part.Description)) this.uniqValues.push(part.Description);
+            }
+            this.uniqLayers = [];
+            for (var part of this.parts) {
+                if (!this.uniqLayers.includes(part.Layer)) this.uniqLayers.push(part.Layer);
+            }
+        },
+        dropParts(event) {
+            var reader = new FileReader();
+            var loader = this.loadParts;
+            reader.readAsText(event.dataTransfer.items[0].getAsFile());
+            reader.onloadend = function() {
+                loader(reader.result);
+            }
+        },
+        loadAssy(assyData) {
+            this.assy.data = assyData;
+        },
+        dropAssy(event) {
+            var reader = new FileReader();
+            var loader = this.loadAssy;
+            reader.readAsDataURL(event.dataTransfer.items[0].getAsFile());
+            reader.onloadend = function() {
+                loader(reader.result);
+            }
+        }
+    },
+    mounted() {
+    }
+};
+</script>
 
-<body>
-    <div id="app" class="container">
-        <div class="row"><div class="col"><h2><img src="logo.png" width="80"> {{title}}</h2></div></div>
+<template>
+    <div class="container">
+        <div class="row"><div class="col"><h2><img src="./logo.png" width="80"> {{title}}</h2></div></div>
         <!-- Nav tabs -->
         <div class="row mb-3"><div class="col"><ul class="nav nav-tabs">
             <li class="nav-item"><a class="nav-link" href="#" @click="selectedTab='setup'">Setup</a></li>
@@ -22,7 +83,7 @@
             <div class="col-md-4 mb-3" style="max-width: 18rem">
                 <div class="card text-bg-light" @dragover.prevent="" @drop.prevent="dropParts($event)">
                     <div class="card-body">
-                        <h5 class="card-title"><img src="assets/img/filetype-csv.svg" width="32"/> Parts List</h5>
+                        <h5 class="card-title"><img src="./assets/img/filetype-csv.svg" width="32"/> Parts List</h5>
                         <p class="card-text">Drag parts list here. One row per part. Columns must include Ref, Description, X, Y and Layer.</p>
                         <p v-if="parts.length > 0">Loaded {{parts.length}} parts with {{uniqValues.length}} unique values.</p>
                     </div>
@@ -31,7 +92,7 @@
             <div class="col-md-4 mb-3" style="max-width: 18rem">
                 <div class="card text-bg-light" @dragover.prevent="" @drop.prevent="dropAssy($event)">
                     <div class="card-body">
-                        <h5 class="card-title"><img src="assets/img/filetype-png.svg" width="32"/> Assembly Drawing</h5>
+                        <h5 class="card-title"><img src="./assets/img/filetype-png.svg" width="32"/> Assembly Drawing</h5>
                         <p class="card-text">Drag assembly drawing here. PNG or JPG format. Cropped to board extents.</p>
                         <img v-if="assy.data.length > 0" style="max-width: 12rem" class="mb-3" :src="assy.data" />
                         <form v-if="assy.data.length > 0 && parts.length > 0" class="row">
@@ -43,7 +104,7 @@
             <div class="col-md-4 mb-3" style="max-width: 18rem">
                 <div class="card text-bg-light">
                     <div class="card-body">
-                        <h5 class="card-title"><img src="assets/img/aspect-ratio.svg" width="32"/> Board Size</h5>
+                        <h5 class="card-title"><img src="./assets/img/aspect-ratio.svg" width="32"/> Board Size</h5>
                         <p class="card-text">Board dimensions in same units as in parts list.</p>
                         <form>
                             <div class="row mb-1"><label class="col-form-label col-6">Left</label><input class="form-control col" type="number" v-model="assy.left"></div>
@@ -64,13 +125,4 @@
             <div class="row mb-3"><div class="col"><reference-list :parts="selectedParts"></reference-list></div></div>
         </div>
     </div>
-
-    <script type="module">
-        import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js';
-        import App from './app.js';
-        var app = createApp(App);
-        app.mount('#app');
-    </script>
-</body>
-
-</html>
+</template>
